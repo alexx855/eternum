@@ -1,0 +1,1 @@
+{"manifest_version":3,"name":"eternum-extension","version":"0.0.1","permissions":["storage","activeTab"],"host_permissions":["*://*.realms.world/*"],"action":{"default_title":"Eternum Extension","default_popup":"popup.html"},"content_scripts":[{"matches":["*://*.realms.world/*"],"js":["content-scripts/content.js"]}]}

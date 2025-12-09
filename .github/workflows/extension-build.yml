@@ -1,0 +1,39 @@
+name: Extension Build
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'client/apps/extension/**'
+      - 'packages/**'
+      - 'contracts/game/manifest_slot.json'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Packages
+        run: pnpm run build:packages
+
+      - name: Build Extension
+        working-directory: client/apps/extension
+        run: pnpm zip
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: eternum-extension
+          path: client/apps/extension/.output/*.zip
