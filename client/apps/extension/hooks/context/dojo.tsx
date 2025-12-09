@@ -3,13 +3,7 @@ import { SetupResult } from "@bibliothecadao/dojo";
 
 const DojoContext = createContext<SetupResult | null>(null);
 
-export const DojoProvider = ({
-  children,
-  value,
-}: {
-  children: ReactNode;
-  value: SetupResult;
-}) => {
+export const DojoProvider = ({ children, value }: { children: ReactNode; value: SetupResult }) => {
   return <DojoContext.Provider value={value}>{children}</DojoContext.Provider>;
 };
 

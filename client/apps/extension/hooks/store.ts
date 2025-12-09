@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { storage } from 'wxt/storage';
+import { create } from "zustand";
+import { storage } from "wxt/storage";
 
 interface WorldProfile {
   name: string;
@@ -18,7 +18,7 @@ interface ExtensionState {
 export const useExtensionStore = create<ExtensionState>((set) => ({
   config: null,
   loadConfig: async () => {
-    const config = await storage.getItem<WorldProfile>('local:gameConfig');
+    const config = await storage.getItem<WorldProfile>("local:gameConfig");
     if (config) {
       set({ config });
     }

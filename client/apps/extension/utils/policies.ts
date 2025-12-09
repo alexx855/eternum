@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toSessionPolicies } from "@cartridge/controller";
 import { getMessages } from "./signing-policy";
 
@@ -37,9 +38,7 @@ export const buildPolicies = (manifest: any, chain: string) => {
       },
       // Add more as needed
       [getContractByName(manifest, "s1_eternum", "realm_systems").address]: {
-        methods: [
-             { name: "create", entrypoint: "create" }
-        ]
+        methods: [{ name: "create", entrypoint: "create" }],
       },
     },
     messages: getMessages(chain),

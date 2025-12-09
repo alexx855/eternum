@@ -25,6 +25,9 @@
 # ignore json files
 **/*.json
 
+**/.wxt
+**/.output
+
 deploy
 
 .conductor
