@@ -1,0 +1,64 @@
+name: Extension
+
+on:
+  push:
+    paths:
+      - "client/apps/extension/**"
+      - "packages/**"
+      - "contracts/l3/world-native/schema/**"
+      - "contracts/l3/world-native/tests/fixtures/current-presets/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/extension-build.yml"
+  pull_request:
+    paths:
+      - "client/apps/extension/**"
+      - "packages/**"
+      - "contracts/l3/world-native/schema/**"
+      - "contracts/l3/world-native/tests/fixtures/current-presets/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/extension-build.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - name: Build workspace packages
+        run: pnpm run build:packages
+      - name: Test extension behavior
+        run: pnpm --dir client/apps/extension test
+      - name: Typecheck extension
+        run: pnpm --dir client/apps/extension compile
+      - name: Lint extension
+        run: pnpm --dir client/apps/extension lint
+      - name: Check unused extension code
+        run: pnpm --dir client/apps/extension knip
+      - name: Package Chrome extension
+        run: pnpm --dir client/apps/extension zip
+      - name: Package Firefox extension
+        run: pnpm --dir client/apps/extension zip:firefox
+      - name: Smoke-test packaged page bridges
+        run: pnpm --dir client/apps/extension test:package
+      - name: Upload extension packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: eternum-extension
+          path: client/apps/extension/.output/*.zip

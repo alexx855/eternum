@@ -1,5 +1,6 @@
 packages:
   - apps/*
+  - client/apps/extension
   - config
   - packages/*
   - tooling/*

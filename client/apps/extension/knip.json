@@ -1,0 +1,8 @@
+{
+  "workspaces": {
+    "client/apps/extension": {
+      "entry": ["entrypoints/**/*.{ts,tsx}", "wxt.config.ts"],
+      "project": ["**/*.{ts,tsx}"]
+    }
+  }
+}

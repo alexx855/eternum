@@ -34,3 +34,6 @@ apps/game/src/shell/generated/
 
 # ignore github actions
 .github/workflows/deploy-game-slot.yml
+
+# WXT generated extension types
+**/.wxt

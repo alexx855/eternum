@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import ts from "typescript";
 import config from "./.knip.json";
+import extensionConfig from "./client/apps/extension/knip.json";
 
 // The system-call bridge receives its provider as `any`, so TypeScript cannot
 // associate those references with the class. Derive them from its actual calls.
@@ -30,6 +31,7 @@ export default {
   ...config,
   workspaces: {
     ...config.workspaces,
+    ...extensionConfig.workspaces,
     "packages/provider": {
       ...config.workspaces["packages/provider"],
       ignoreMembers: systemCallProviderMethods(),
